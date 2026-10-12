@@ -13,6 +13,8 @@ Each case contains:
 - `pattern` and `group`: the primary taxonomy area under test
 - `input`: the text shown to the compared systems
 - `instruction`: the same task context given to both systems
+- `case_type`: whether the case is a `correction`, `adaptation`, or
+  `preservation` task
 - `positive_control`: whether the text is expected to remain unchanged
 - `dimensions`: case-specific notes for fidelity, native Turkish, pattern
   resolution, register, and restraint
@@ -22,6 +24,21 @@ The corpus intentionally does not include a target rewrite. For open-ended
 Turkish, a single reference string would turn a reader-preference study into
 an exact-match test.
 
+## Case types and scoring
+
+- A **correction** case starts with a targeted pattern problem. Pattern
+  resolution measures whether the output fixes that problem without changing
+  the facts.
+- An **adaptation** case starts with valid source text and asks for a change of
+  audience, medium, or register. Pattern resolution measures whether the
+  requested adaptation is completed without inventing a correction.
+- A **preservation** case is a positive control. The expected result is the
+  unchanged input unless a concrete problem is found; it is counted in
+  preservation/over-editing results, not as a successful correction.
+
+`positive_control` must be `true` only for preservation cases. This keeps
+pattern-resolution results separate from the cost of unnecessary edits.
+
 ## Reproducible protocol
 
 1. Freeze the corpus revision, model versions, prompts, temperature, and date.
@@ -30,8 +47,9 @@ an exact-match test.
 4. Have at least two independent readers score fidelity, native Turkish,
    pattern resolution, register, and restraint from 1 to 5. Record ties and
    disagreements instead of forcing a consensus.
-5. Report aggregate scores, native-reader preference, positive-control
-   preservation, exact-invariant failures, and per-pattern failures.
+5. Report aggregate scores, native-reader preference, correction and adaptation
+   results separately, positive-control preservation, exact-invariant failures,
+   and per-pattern failures.
 
 Do not mix these cases with `evals/cases/` when measuring a model. Keeping the
 benchmark held out makes cross-model comparisons less vulnerable to regression

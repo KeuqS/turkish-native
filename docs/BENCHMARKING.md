@@ -31,6 +31,13 @@ Score each output from 1 to 5 for:
 - **Register:** Does it fit the medium and audience?
 - **Restraint:** Did it avoid unnecessary edits and preserve positive controls?
 
+Report correction cases, adaptation cases, and preservation cases separately.
+For correction cases, pattern resolution asks whether the named problem was
+fixed. For adaptation cases, it asks whether the requested audience, medium,
+or register change was made without inventing a problem. Preservation cases
+are positive controls: unchanged output is the expected result and should be
+reported as an over-editing check, not as a correction success.
+
 Also check every `exact_invariants` entry in the case. A fluent rewrite that
 changes a date, identifier, entity, count, or domain fact is a fidelity failure.
 
@@ -57,6 +64,7 @@ A useful report includes:
 - positive-control preservation rate,
 - per-pattern failures,
 - native-reader preference rate.
+- correction, adaptation, and preservation results separately.
 
 For the v0.4 corpus, also include the corpus commit, positive-control
 preservation rate, exact-invariant failures, and any per-pattern or per-group
